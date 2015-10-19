@@ -95,6 +95,9 @@ zero_neq_one () -- No constructor for Id 0 1 available.
 for_exist : {A : Set} {B : A -> Set} -> ((a : A) -> ~(B a)) -> ~(A /\ B)
 for_exist = uncurry -- What a surprise.
 
+for_exist_rev : {A : Set} {B : A -> Set} -> ~(A /\ B) -> ((a : A) -> ~(B a))
+for_exist_rev f a b = f (a , b)
+
 data List (A : Set) : Set where
   [] : List A
   _::_ : A -> List A -> List A
