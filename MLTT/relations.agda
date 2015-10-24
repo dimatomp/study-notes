@@ -60,4 +60,13 @@ theorem_about_min_refl_relation {A} {rel} {hReflexive} {hMinimal} = (((hReflexiv
 
 -- The only place for which we needed to delve into levels so much. Here we define a relation of relations.
 rels_equality_is_equivalence : {ξ η : Level} {S : Set ξ} -> equality (Relation.define (equal {ξ} {η} {η} {S}))
-rels_equality_is_equivalence = {!!}
+rels_equality_is_equivalence = ((refl , symm) , trans)
+  where
+    refl : reflexive (Relation.define equal)
+    _/\_.fst (refl _) _ _ x = x
+    _/\_.snd (refl _) _ _ x = x
+    symm : symmetric (Relation.define equal)
+    symm _ _ (fst , snd) = (snd , fst)
+    trans : transitive (Relation.define equal)
+    _/\_.fst (trans _ _ _ (fst , _) (fst₁ , _)) a₁ b₁ x = fst₁ a₁ b₁ (fst a₁ b₁ x)
+    _/\_.snd (trans _ _ _ (_ , snd) (_ , snd₁)) a₁ b₁ x = snd a₁ b₁ (snd₁ a₁ b₁ x)
